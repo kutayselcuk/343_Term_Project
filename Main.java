@@ -46,7 +46,17 @@ public class Main {
 				// we iterate on each capacity
 				for (int j = 0; j <= W; j++) {
 					
-					if(weightList.get(i-1) <= j){
+					if (weightList.get(i-1) > j){
+						BottomUpMatrix[i][j] = BottomUpMatrix[i-1][j];
+					}
+					
+				    else{
+					// we maximize value at this rank in the matrix
+					BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i-1][j], valueList.get(i-1) + BottomUpMatrix[i-1][j - weightList.get(i-1)]);
+					}
+
+					/* 
+					if(weightList.get(i) <= j){
 
 						int emptySpaceCost = (int)(((valueList.get(i) + BottomUpMatrix[i-1][j - weightList.get(i)])/1000)*0.02);
 						BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i-1][j], valueList.get(i) + BottomUpMatrix[i-1][j - weightList.get(i)] - emptySpaceCost);
@@ -54,6 +64,7 @@ public class Main {
 					else{
 						BottomUpMatrix[i][j] = BottomUpMatrix[i-1][j];
 					}
+					*/
 				}
 			}
 
@@ -61,10 +72,12 @@ public class Main {
 			int w = W;
 			List<Track> includedTracks = new ArrayList<>(); //List will be used to create optimized Album object to return
 			
+			int id = 1000;
 			for (int i = length; i > 0  &&  currentCapacity > 0; i--) {
-			  if (currentCapacity != BottomUpMatrix[i-1][w]) {
-
-				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(3)), Integer.parseInt(list.get(i).get(4)), 1, null));
+			  
+				if (currentCapacity != BottomUpMatrix[i-1][w]) {
+				id += 1;
+				includedTracks.add(new Track(id, Integer.parseInt(list.get(i).get(4)), 1, null));
 				// we remove items value and weight
 				currentCapacity -= valueList.get(i-1);
 				w -= weightList.get(i-1);
