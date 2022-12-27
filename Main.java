@@ -27,22 +27,52 @@ public class Main {
 		System.out.println(sequential_data.get(0).get(1));
 		
 		//Knapsack solver for first part
-		int W = 30000; //Capacity of th album
-		Album OptimizedAlbum= AlbumOptimizer(valueList, weightList, W, valueList.size());
+		int W = 1800000; //Total capacity of thr album in milliseconds
+		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list);
 		OptimizedAlbum.display();
 		
         }
 		
-		public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length){
+		public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length, List<List<String>> list){
 			
-			int[][] BottomUpMatrix = new int[length + 1][W+1];
-
+			int[][] BottomUpMatrix = new int[length + 1][W+1]; 
+			
+			//First line of algorithm is assigned to 0
 			for (int i = 0; i <= W; i++){
-				BottomUpMatrix[0][i] = 0;
+				BottomUpMatrix[0][i] = 0; 
 			}
   			
+			for (int i = 1; i <= length; i++) {
+				// we iterate on each capacity
+				for (int j = 0; j <= W; j++) {
+					
+					if(weightList.get(i-1) <= j){
+
+						int emptySpaceCost = (int)(((valueList.get(i) + BottomUpMatrix[i-1][j - weightList.get(i)])/1000)*0.02);
+						BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i-1][j], valueList.get(i) + BottomUpMatrix[i-1][j - weightList.get(i)] - emptySpaceCost);
+					}
+					else{
+						BottomUpMatrix[i][j] = BottomUpMatrix[i-1][j];
+					}
+				}
+			}
+
+			int currentCapacity = BottomUpMatrix[length][W];
+			int w = W;
+			List<Track> includedTracks = new ArrayList<>(); //List will be used to create optimized Album object to return
 			
-			return null;
+			for (int i = length; i > 0  &&  currentCapacity > 0; i--) {
+			  if (currentCapacity != BottomUpMatrix[i-1][w]) {
+
+				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(3)), Integer.parseInt(list.get(i).get(4)), 1, null));
+				// we remove items value and weight
+				currentCapacity -= valueList.get(i-1);
+				w -= weightList.get(i-1);
+			  }
+			}
+
+			Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W]);
+			return OptimizedAlbum;
 		}
  
         public static List<List<String>> readValues() throws IOException { 
