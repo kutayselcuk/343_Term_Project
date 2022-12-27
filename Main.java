@@ -72,12 +72,10 @@ public class Main {
 			int w = W;
 			List<Track> includedTracks = new ArrayList<>(); //List will be used to create optimized Album object to return
 			
-			int id = 1000;
 			for (int i = length; i > 0  &&  currentCapacity > 0; i--) {
 			  
 				if (currentCapacity != BottomUpMatrix[i-1][w]) {
-				id += 1;
-				includedTracks.add(new Track(id, Integer.parseInt(list.get(i).get(4)), 1, null));
+				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(4)), 1, null));
 				// we remove items value and weight
 				currentCapacity -= valueList.get(i-1);
 				w -= weightList.get(i-1);
