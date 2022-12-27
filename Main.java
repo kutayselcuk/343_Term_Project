@@ -26,9 +26,25 @@ public class Main {
 		}
 		System.out.println(sequential_data.get(0).get(1));
 		
+		//Knapsack solver for first part
+		int W = 30000; //Capacity of th album
+		Album OptimizedAlbum= AlbumOptimizer(valueList, weightList, W, valueList.size());
+		OptimizedAlbum.display();
 		
-
         }
+		
+		public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length){
+			
+			int[][] BottomUpMatrix = new int[length + 1][W+1];
+
+			for (int i = 0; i <= W; i++){
+				BottomUpMatrix[0][i] = 0;
+			}
+  			
+			
+			return null;
+		}
+ 
         public static List<List<String>> readValues() throws IOException { 
                 try
 		{
