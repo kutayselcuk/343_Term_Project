@@ -23,11 +23,11 @@ public class Album {
 	}
 	
 	public void display() {
-		int totalMinute = totalMinute();
+		double totalMinute = totalMinute();
 		if (tracks != null  &&  !tracks.isEmpty()){
 			System.out.println("\nKnapsack solution");
 			System.out.println("Value = " + totalValue);
-			System.out.println("Total minute: " + totalMinute);
+			System.out.println("Total minute: " + (totalMinute/60000));
 			System.out.println("Items to pick :");
 			
 			for (Track track : tracks) {
