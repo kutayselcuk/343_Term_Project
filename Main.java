@@ -28,12 +28,12 @@ public class Main {
 		
 		//Knapsack solver for first part
 		int W = 1800000; //Total capacity of thr album in milliseconds
-		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list);
+		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
 		OptimizedAlbum.display();
 		
         }
 		
-		public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length, List<List<String>> list){
+		public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data){
 			
 			int[][] BottomUpMatrix = new int[length + 1][W+1]; 
 			
@@ -85,10 +85,7 @@ public class Main {
 			Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W]);
 			return OptimizedAlbum;
 		}
-		/* 
-			//solver for queue part
-		public static Album AlbumQueue(List<ArrayList<Double>> sequential_data, int length, List<List<String>> list);
-		*/
+		
  
         public static List<List<String>> readValues() throws IOException { 
                 try
