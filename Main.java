@@ -30,6 +30,7 @@ public class Main {
 		int W = 1800000; //Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list);
 		OptimizedAlbum.display();
+		OptimizedAlbum.totalDurationCalculator();
 		
         }
 		
@@ -75,7 +76,7 @@ public class Main {
 			for (int i = length; i > 0  &&  currentCapacity > 0; i--) {
 			  
 				if (currentCapacity != BottomUpMatrix[i-1][w]) {
-				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(4)), 1, null));
+				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), 1, null));
 				// we remove items value and weight
 				currentCapacity -= valueList.get(i-1);
 				w -= weightList.get(i-1);
