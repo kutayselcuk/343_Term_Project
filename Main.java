@@ -30,7 +30,6 @@ public class Main {
 		int W = 1800000; //Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list);
 		OptimizedAlbum.display();
-		OptimizedAlbum.totalDurationCalculator();
 		
         }
 		
