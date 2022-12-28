@@ -11,6 +11,7 @@ public class Album {
 		this.tracks = tracks;
 		this.totalValue = value;
 	}
+
 	
 	public void display() {
 		if (tracks != null  &&  !tracks.isEmpty()){
