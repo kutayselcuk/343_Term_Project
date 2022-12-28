@@ -2,11 +2,10 @@ import java.util.List;
 
 public class Album {
 
-	// list of items to put in the bag to have the maximal value
+	// list of items to put in the album to have the maximal value
 	public List<Track> tracks;
 	// maximal value possible
 	public int totalValue;
-	//
 
 
 	public Album(List<Track> tracks, int value) {
@@ -14,6 +13,7 @@ public class Album {
 		this.totalValue = value;
 		
 	}
+
 	public int totalMinute(){
 		int totalMinute = 0;
 		for (Track track : tracks) {
@@ -25,10 +25,10 @@ public class Album {
 	public void display() {
 		double totalMinute = totalMinute();
 		if (tracks != null  &&  !tracks.isEmpty()){
-			System.out.println("\nKnapsack solution");
-			System.out.println("Value = " + totalValue);
-			System.out.println("Total minute: " + (totalMinute/60000));
-			System.out.println("Items to pick :");
+			System.out.println("\nAlbum Solution");
+			System.out.println("Popularity = " + totalValue);
+			System.out.println("Total Minute: " + (totalMinute/60000));
+			System.out.println("Tracks to pick :");
 
 			for (Track track : tracks) {
 				System.out.println("- " + track.getId());

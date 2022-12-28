@@ -27,7 +27,7 @@ public class Main {
 		System.out.println(sequential_data.get(0).get(1));
 		
 		//Knapsack solver for first part
-		int W = 1800000; //Total capacity of thr album in milliseconds
+		int W = 1800000; //Total capacity of the album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list);
 		OptimizedAlbum.display();
 		
@@ -43,7 +43,7 @@ public class Main {
 			}
   			
 			for (int i = 1; i <= length; i++) {
-				// we iterate on each capacity
+				// We iterate on each capacity
 				for (int j = 0; j <= W; j++) {
 					
 					if (weightList.get(i-1) > j){
@@ -51,11 +51,11 @@ public class Main {
 					}
 					
 				    else{
-					// we maximize value at this rank in the matrix
+					// We maximize value at this rank in the matrix
 					BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i-1][j], valueList.get(i-1) + BottomUpMatrix[i-1][j - weightList.get(i-1)]);
 					}
 
-					/* 
+					/* alternative solution - does not work currently
 					if(weightList.get(i) <= j){
 
 						int emptySpaceCost = (int)(((valueList.get(i) + BottomUpMatrix[i-1][j - weightList.get(i)])/1000)*0.02);
@@ -76,7 +76,7 @@ public class Main {
 			  
 				if (currentCapacity != BottomUpMatrix[i-1][w]) {
 				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), 1, null));
-				// we remove items value and weight
+				// We remove items value and weight
 				currentCapacity -= valueList.get(i-1);
 				w -= weightList.get(i-1);
 			  }
