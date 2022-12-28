@@ -85,6 +85,10 @@ public class Main {
 			Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W]);
 			return OptimizedAlbum;
 		}
+		/* 
+			//solver for queue part
+		public static Album AlbumQueue(List<ArrayList<Double>> sequential_data, int length, List<List<String>> list);
+		*/
  
         public static List<List<String>> readValues() throws IOException { 
                 try
