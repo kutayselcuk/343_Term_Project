@@ -22,6 +22,7 @@ public class Album {
 		return totalMinute;
 	}
 
+
 	public void display() {
 		double totalMinute = totalMinute();
 		if (tracks != null  &&  !tracks.isEmpty()){
