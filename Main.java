@@ -67,7 +67,7 @@ public class Main {
 
 			if (currentCapacity != BottomUpMatrix[i - 1][w]) {
 				includedTracks.add(
-						new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), 1, null));
+						new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), Integer.parseInt(list.get(i).get(4)), null));
 				// We remove items value and weight
 				currentCapacity -= valueList.get(i - 1);
 				w -= weightList.get(i - 1);
