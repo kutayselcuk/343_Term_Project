@@ -28,13 +28,13 @@ public class Main {
 
 		// Knapsack solver for first part
 		int W = 1800000; // Total capacity of thr album in milliseconds
-		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
+		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data, list1);
 		OptimizedAlbum.display();
 
 	}
 
 	public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length,
-			List<List<String>> list, List<ArrayList<Double>> sequential_data) {
+			List<List<String>> list, List<ArrayList<Double>> sequential_data, List<List<String>> list1) {
 
 		int[][] BottomUpMatrix = new int[length + 1][W + 1];
 
@@ -57,19 +57,6 @@ public class Main {
 							valueList.get(i - 1) + BottomUpMatrix[i - 1][j - weightList.get(i - 1)]);
 				}
 
-				/*
-				 * alternative solution - does not work currently
-				 * if(weightList.get(i) <= j){
-				 * 
-				 * int emptySpaceCost = (int)(((valueList.get(i) + BottomUpMatrix[i-1][j -
-				 * weightList.get(i)])/1000)*0.02);
-				 * BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i-1][j], valueList.get(i) +
-				 * BottomUpMatrix[i-1][j - weightList.get(i)] - emptySpaceCost);
-				 * }
-				 * else{
-				 * BottomUpMatrix[i][j] = BottomUpMatrix[i-1][j];
-				 * }
-				 */
 			}
 		}
 
