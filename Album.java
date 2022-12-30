@@ -1,26 +1,90 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
+
 public class Album {
 
 	// list of items to put in the album to have the maximal value
 	public ArrayList<Track> tracks;
 	// maximal value possible
 	public int totalValue;
+	public double totalSeqValue;
 
 
-	public Album(ArrayList<Track> tracks, int totalValue) {
+	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue) {
 		this.tracks = tracks;
 		this.totalValue = totalValue;
-		
+		this.totalSeqValue = totalSeqValue;
 	}
 	
-	public void AlbumOrganizer(){
-		
+	public void albumOrganizer(int length){
+
+		ArrayList<Track> tempTracksList = tracks;
+		ArrayList<Integer> IDList = tracksIdList();
+		ArrayList<Integer> usedIDs = new ArrayList<>();
+		ArrayList<Track> organizedTrackList = new ArrayList<>();
+	
+		Track firstTrack = tracks.get(0);
+		Track lastTrack = tracks.get(1);
+
+		organizedTrackList.add(firstTrack);
+		usedIDs.add(firstTrack.getId());
+		usedIDs.add(lastTrack.getId());
+
+		tempTracksList.remove(0);
+		tempTracksList.remove(0);
+
+		while(tempTracksList.size() != 0){
+
+			double currentMaxSeqValue = 0;
+			int currentMaxID = 0;
+
+			Track previousLastTrack = organizedTrackList.get(organizedTrackList.size()-1);
+			//System.out.println("id: " + previousLastTrack.track_id); --> if you want to see current last track and next previous track, in line 50 you can see sequantial value comperison between this track and leftover tracks that are not getting in the organized album
+			double[] currentSeqArray = previousLastTrack.getSequentialValue();
+
+			for(int i = 0; i < length; i++){
+				if(IDList.contains(i) && currentMaxSeqValue <= currentSeqArray[i] && !usedIDs.contains(i)){
+					currentMaxID = i;
+					//System.out.println("current seq array length: " + currentSeqArray.length + "i and index: " + i); --> if you want to see which tracks are considered
+					currentMaxSeqValue = currentSeqArray[i];
+				}
+			}
+
+			totalSeqValue += currentMaxSeqValue;
+
+			Track nexTrack = getTrackWithID(currentMaxID);
+			usedIDs.add(currentMaxID);
+			organizedTrackList.add(nexTrack);
+			tempTracksList.remove(nexTrack);
+		}
+
+		totalSeqValue += organizedTrackList.get(organizedTrackList.size()-1).getSequentialValue()[lastTrack.track_id];
+		organizedTrackList.add(lastTrack);
+		tracks = organizedTrackList;
+	}
+
+	public ArrayList<Integer> tracksIdList(){
+
+		ArrayList<Integer> tracksIdList = new ArrayList<>();
+		for(Track track : tracks){
+			tracksIdList.add(track.getId());
+		}
+		return tracksIdList;
+	}
+
+	public Track getTrackWithID(int id){
+		for(Track track : tracks){
+			if(id == track.getId()){
+				return track;
+			}
+		}
+		return null;
 	}
 
 	public void trackListSorter(){
-		//ArrayList<Track> sortedTracksArray = new ArrayList<>();
+		
 		Track tempTrack = new Track(0,0,0,null);
 
 		for(int i = 0; i < tracks.size(); i++){
