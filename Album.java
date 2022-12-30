@@ -41,13 +41,13 @@ public class Album {
 			int currentMaxID = 0;
 
 			Track previousLastTrack = organizedTrackList.get(organizedTrackList.size()-1);
-			//System.out.println("id: " + previousLastTrack.track_id); --> if you want to see current last track and next previous track, in line 50 you can see sequantial value comperison between this track and leftover tracks that are not getting in the organized album
+			System.out.println("id: " + previousLastTrack.track_id); //--> if you want to see current last track and next previous track, in line 50 you can see sequantial value comperison between this track and leftover tracks that are not getting in the organized album
 			double[] currentSeqArray = previousLastTrack.getSequentialValue();
 
 			for(int i = 0; i < length; i++){
 				if(IDList.contains(i) && currentMaxSeqValue <= currentSeqArray[i] && !usedIDs.contains(i)){
 					currentMaxID = i;
-					//System.out.println("current seq array length: " + currentSeqArray.length + "i and index: " + i); --> if you want to see which tracks are considered
+					System.out.println("current seq array length: " + currentSeqArray.length + "i and index: " + i); //--> if you want to see which tracks are considered
 					currentMaxSeqValue = currentSeqArray[i];
 				}
 			}
