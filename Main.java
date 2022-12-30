@@ -25,8 +25,8 @@ public class Main {
 			sequential_data.add(row);
 		}
 		System.out.println(sequential_data.get(0).get(1));
-		System.out.println("value liset size: " + valueList.size());
-		System.out.println("valuelist out: " + valueList.get(0));
+		System.out.println("value list size: " + valueList.size());
+		System.out.println("value list out: " + valueList.get(0));
 		System.out.println("seq data size: " + sequential_data.size());
 		System.out.println("seq out: " + sequential_data.get(0));
 		
