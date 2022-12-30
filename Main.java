@@ -34,9 +34,13 @@ public class Main {
 		int W = 1800000; // Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
 		OptimizedAlbum.trackListSorter();
-		
-		
+		//System.out.println("first version length: " + OptimizedAlbum.getTracks().size()); first and second version lengths are used to compare lengths after organization
+		OptimizedAlbum.albumOrganizer(sequential_data.get(0).size());
+		//System.out.println("second version length: " + OptimizedAlbum.getTracks().size());
+
 		OptimizedAlbum.display();
+
+		
 		
 	}
 
@@ -148,8 +152,8 @@ public class Main {
 			}
 			
 		}
-		
-		Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W]);
+
+		Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W], 0);
 		return OptimizedAlbum;
 	}
 }
