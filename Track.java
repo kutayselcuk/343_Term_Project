@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Track{
         public int track_id;
         public int track_duration;
@@ -10,8 +8,6 @@ public class Track{
                 this.track_duration = track_duration;
                 this.track_individual_value = track_individual_value;
                 this.track_sequential_value = track_sequential_value;
-        }
-        public Track(int parseInt, int parseInt2, int parseInt3, ArrayList<Double> arrayList) {
         }
         public int getId(){
                 return track_id;
