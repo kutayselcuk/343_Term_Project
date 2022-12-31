@@ -1,12 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
+		long start = System.currentTimeMillis();
 		List<List<String>> list = readValues();
 		//System.out.println(list.get(0));
 		List<Integer> valueList = new ArrayList<Integer>();
@@ -41,8 +44,9 @@ public class Main {
 		//System.out.println("second version length: " + OptimizedAlbum.getTracks().size());
 
 		OptimizedAlbum.display();
-
-		
+		long end = System.currentTimeMillis();
+		NumberFormat formatter = new DecimalFormat("#0.00000");
+		System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
 		
 	}
 
