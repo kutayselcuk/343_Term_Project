@@ -1,9 +1,9 @@
 public class Track{
         public int track_id;
         public int track_duration;
-        public int track_individual_value;
+        public double track_individual_value;
         public double[] track_sequential_value;
-        public Track(int track_id, int track_duration, int track_individual_value, double[] track_sequential_value){
+        public Track(int track_id, int track_duration, double track_individual_value, double[] track_sequential_value){
                 this.track_id = track_id;
                 this.track_duration = track_duration;
                 this.track_individual_value = track_individual_value;
@@ -23,7 +23,7 @@ public class Track{
         public void setDuration(int track_duration){
                 this.track_duration = track_duration;
         }
-        public int getIndividualValue(){
+        public double getIndividualValue(){
                 return track_individual_value;
         }
         public void setIndividualValue(int track_individual_value){

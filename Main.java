@@ -24,40 +24,51 @@ public class Main {
 			}
 			sequential_data.add(row);
 		}
+		/* 
 		System.out.println(sequential_data.get(0).get(1));
 		System.out.println("value liset size: " + valueList.size());
 		System.out.println("valuelist out: " + valueList.get(0));
 		System.out.println("seq data size: " + sequential_data.size());
 		System.out.println("seq out: " + sequential_data.get(0));
+		*/
 		
 		//Knapsack solver for first part
-		int W = 1800000; // Total capacity of thr album in milliseconds
+		int W = 1800036; // Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
 		OptimizedAlbum.trackListSorter();
 		//System.out.println("first version length: " + OptimizedAlbum.getTracks().size()); first and second version lengths are used to compare lengths after organization
 		OptimizedAlbum.albumOrganizer(sequential_data.get(0).size());
 		//System.out.println("second version length: " + OptimizedAlbum.getTracks().size());
-
 		OptimizedAlbum.display();
-
-		
-		
 	}
 
 	public static Album AlbumOptimizer2(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
-		
-		int[][] matrix = new int[w.size() + 1][W + 1];
 
+		List<Double> newValues = new ArrayList<Double>();
+		for(int i = 0; i < v.size(); i++){
+			
+			double currentValue = v.get(i);
+			double currentDuration = w.get(i);
+
+			double durationCredit = currentDuration/1000*0.02;
+			double currenNewValue = currentValue + durationCredit;
+
+			newValues.add(currenNewValue);
+		}
+		System.out.println(newValues);
+
+		//knapsack solution
+		double[][] matrix = new double[w.size() + 1][W + 1];
 		// First line of algorithm is assigned to 0
 		for (int i = 0; i <= W; i++) {
-			matrix[0][i] = 0;
+			matrix[0][i] = 0.0;
 		}
-
 		for (int i = 1; i <= w.size(); i++) {
 			for (int j = 0; j <= W; j++) {
 				int weight = w.get(i-1);
 				if(weight <= j){
-					matrix[i][j] = Math.max(v.get(i-1) + matrix[i - 1][j - weight], matrix[i - 1][j]
+					matrix[i][j] = Math.max(newValues.get(i-1) + matrix[i - 1][j - weight],
+					matrix[i - 1][j]
 					);
 				}
 				else{
@@ -67,7 +78,8 @@ public class Main {
 			}
 		}
 		
-		int currentCapacity = matrix[length][W];
+		//reporting
+		double currentCapacity = matrix[length][W];
 		int K = W;
 		ArrayList<Track> includedTracks = new ArrayList<>(); // List will be used to create optimized Album object to return
 
