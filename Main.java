@@ -131,9 +131,8 @@ public class Main {
 
 			allTracks.add(new Track(i, w.get(i), relativeValues.get(i), v.get(i), currentDoubleArray));
 		}
-		Album allTracksAlbum = new Album(allTracks, 0, 0);
-		allTracksAlbum.trackListSorter_IndVal();;
-		allTracksAlbum.display();
+		Album allTracksAlbum = new Album(allTracks, 0, 0,0);
+		allTracksAlbum.trackListSorter_RelVal();;
 
 		int total_duration = 0;
 		int total_popularity = 0;
@@ -147,7 +146,7 @@ public class Main {
 			index_counter += 1;
 		}
 
-		Album OptimizedAlbum = new Album(includedTracks, total_popularity, 0);
+		Album OptimizedAlbum = new Album(includedTracks, total_popularity, 0,W);
 		OptimizedAlbum.trackListSorter_IndVal();
 		return OptimizedAlbum;
 	}

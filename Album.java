@@ -10,12 +10,14 @@ public class Album {
 	// maximal value possible
 	public int totalValue;
 	public double totalSeqValue;
+	public int capacity;
 
 
-	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue) {
+	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue, int capacity) {
 		this.tracks = tracks;
 		this.totalValue = totalValue;
 		this.totalSeqValue = totalSeqValue;
+		this.capacity = capacity;
 	}
 	
 	public void albumOrganizer(int length){
@@ -126,18 +128,27 @@ public class Album {
 		return totalDuration;
 	}
 
+	public double emptyCost(){
+		double total_duration = getTotalDuration();
+		double emptySecondsCost = (this.capacity-total_duration)/1000*0.02;
 
+		return emptySecondsCost;
+
+	}
 	public void display() {
-		double totalDuration = getTotalDuration();
+		int totalDuration = getTotalDuration();
+
 		if (tracks != null  &&  !tracks.isEmpty()){
 			System.out.println("\nAlbum Solution");
-			System.out.println("Popularity = " + totalValue);
-			System.out.println("Total Minute: " + (totalDuration));
+			System.out.println("Popularity = " + (totalValue-emptyCost()));
+			System.out.println("Total Duration: " + (totalDuration) + " milliseconds");
 			System.out.println("Ttoal Sequantial VAlue: " + totalSeqValue);
 			System.out.println("\nTracks to pick :");
 
+			int queueNo = 1;
 			for (Track track : tracks) {
-				System.out.println("ID: " + track.getId() + " | with relative value: " + track.getTrack_relative_value() + " | with value: " + track.getIndividualValue());
+				System.out.println("Queue No: " + queueNo + " | ID: " + track.getId() + " | with relative value: " + track.getTrack_relative_value() + " | with value: " + track.getIndividualValue());
+				queueNo += 1;
 			}
 		}
 	}
