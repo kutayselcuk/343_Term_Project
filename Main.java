@@ -123,7 +123,6 @@ public class Main {
 			double relativeValue = value + durationCredit;
 			relativeValues.add(relativeValue);
 		}
-		System.out.println("relative values: " + relativeValues);
 
 		int[][] matrix = new int[w.size() + 1][W + 1];
 
