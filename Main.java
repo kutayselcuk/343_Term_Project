@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		List<List<String>> list = readValues();
-		System.out.println(list.get(0));
+		//System.out.println(list.get(0));
 		List<Integer> valueList = new ArrayList<Integer>();
 		List<Integer> weightList = new ArrayList<Integer>();
 		for (int i = 1; i < list.size(); i++) {
@@ -24,14 +24,16 @@ public class Main {
 			}
 			sequential_data.add(row);
 		}
+		/* 
 		System.out.println(sequential_data.get(0).get(1));
 		System.out.println("value liset size: " + valueList.size());
 		System.out.println("valuelist out: " + valueList.get(0));
 		System.out.println("seq data size: " + sequential_data.size());
 		System.out.println("seq out: " + sequential_data.get(0));
-		
+		*/
+
 		//Knapsack solver for first part
-		int W = 1800000; // Total capacity of thr album in milliseconds
+		int W = 1800036; // Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
 		OptimizedAlbum.trackListSorter();
 		//System.out.println("first version length: " + OptimizedAlbum.getTracks().size()); first and second version lengths are used to compare lengths after organization
@@ -59,12 +61,14 @@ public class Main {
 				line = br.readLine();
 			}
 
+			/*
 			// printing the fetched data
 			for (List<String> list : data) {
 				for (String str : list)
 					System.out.print(str + " ");
 				System.out.println();
 			}
+			*/
 			br.close();
 			return data;
 		} catch (Exception e) {
@@ -90,12 +94,14 @@ public class Main {
 				line = br.readLine();
 			}
 
+			/* 
 			// printing the fetched data
 			for (List<String> list : data) {
 				for (String str : list)
 					System.out.print(str + " ");
 				System.out.println();
 			}
+			*/
 			br.close();
 			return data;
 		} catch (Exception e) {
@@ -107,6 +113,17 @@ public class Main {
 	}
 
 	public static Album AlbumOptimizer(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
+		
+		//creating relative values
+		List<Double> relativeValues = new ArrayList<Double>();
+		for(int i = 0; i < v.size(); i++){
+			double value = v.get(i);
+			double duration = w.get(i);
+			double durationCredit = duration/1000*0.02;
+			double relativeValue = value + durationCredit;
+			relativeValues.add(relativeValue);
+		}
+		System.out.println("relative values: " + relativeValues);
 
 		int[][] matrix = new int[w.size() + 1][W + 1];
 
