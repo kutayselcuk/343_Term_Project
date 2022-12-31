@@ -83,13 +83,28 @@ public class Album {
 		return null;
 	}
 
-	public void trackListSorter(){
+	public void trackListSorter_IndVal(){
 		
-		Track tempTrack = new Track(0,0,0,null);
+		Track tempTrack = new Track(0,0,0,0,null);
 
 		for(int i = 0; i < tracks.size(); i++){
 			for(int j = i+1; j < tracks.size(); j++){
 				if(tracks.get(i).getIndividualValue() < tracks.get(j).getIndividualValue()){
+					tempTrack = tracks.get(i);
+					tracks.set(i, tracks.get(j));
+					tracks.set(j, tempTrack);
+				}
+			}
+		}
+	}
+
+	public void trackListSorter_RelVal(){
+		
+		Track tempTrack = new Track(0,0,0,0,null);
+
+		for(int i = 0; i < tracks.size(); i++){
+			for(int j = i+1; j < tracks.size(); j++){
+				if(tracks.get(i).getTrack_relative_value() < tracks.get(j).getTrack_relative_value()){
 					tempTrack = tracks.get(i);
 					tracks.set(i, tracks.get(j));
 					tracks.set(j, tempTrack);
@@ -103,25 +118,26 @@ public class Album {
 	}
 
 
-	public int totalMinute(){
-		int totalMinute = 0;
+	public int getTotalDuration(){
+		int totalDuration = 0;
 		for (Track track : tracks) {
-			totalMinute += track.getDuration();
+			totalDuration += track.getDuration();
 		}
-		return totalMinute;
+		return totalDuration;
 	}
 
 
 	public void display() {
-		double totalMinute = totalMinute();
+		double totalDuration = getTotalDuration();
 		if (tracks != null  &&  !tracks.isEmpty()){
 			System.out.println("\nAlbum Solution");
 			System.out.println("Popularity = " + totalValue);
-			System.out.println("Total Minute: " + (totalMinute/60000));
-			System.out.println("Tracks to pick :");
+			System.out.println("Total Minute: " + (totalDuration));
+			System.out.println("Ttoal Sequantial VAlue: " + totalSeqValue);
+			System.out.println("\nTracks to pick :");
 
 			for (Track track : tracks) {
-				System.out.println("- " + track.getId() + " with value: " + track.getIndividualValue());
+				System.out.println("ID: " + track.getId() + " | with relative value: " + track.getTrack_relative_value() + " | with value: " + track.getIndividualValue());
 			}
 		}
 	}

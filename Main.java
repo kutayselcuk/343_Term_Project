@@ -35,7 +35,7 @@ public class Main {
 		//Knapsack solver for first part
 		int W = 1800036; // Total capacity of thr album in milliseconds
 		Album OptimizedAlbum = AlbumOptimizer(valueList, weightList, W, valueList.size(), list, sequential_data);
-		OptimizedAlbum.trackListSorter();
+		OptimizedAlbum.trackListSorter_IndVal();
 		//System.out.println("first version length: " + OptimizedAlbum.getTracks().size()); first and second version lengths are used to compare lengths after organization
 		OptimizedAlbum.albumOrganizer(sequential_data.get(0).size());
 		//System.out.println("second version length: " + OptimizedAlbum.getTracks().size());
@@ -112,9 +112,10 @@ public class Main {
 
 	}
 
-	public static Album AlbumOptimizer(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
+	public static Album AlbumOptimizer(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data){
 		
 		//creating relative values
+		ArrayList<Track> allTracks = new ArrayList<>();
 		List<Double> relativeValues = new ArrayList<Double>();
 		for(int i = 0; i < v.size(); i++){
 			double value = v.get(i);
@@ -122,51 +123,32 @@ public class Main {
 			double durationCredit = duration/1000*0.02;
 			double relativeValue = value + durationCredit;
 			relativeValues.add(relativeValue);
-		}
 
-		int[][] matrix = new int[w.size() + 1][W + 1];
-
-		// First line of algorithm is assigned to 0
-		for (int i = 0; i <= W; i++) {
-			matrix[0][i] = 0;
-		}
-
-		for (int i = 1; i <= w.size(); i++) {
-			for (int j = 0; j <= W; j++) {
-				int weight = w.get(i-1);
-				if(weight <= j){
-					matrix[i][j] = Math.max(v.get(i-1) + matrix[i - 1][j - weight], matrix[i - 1][j]
-					);
-				}
-				else{
-					matrix[i][j]=matrix[i-1][j];
-				}
-
-			}
-		}
-
-		int currentCapacity = matrix[length][W];
-		int K = W;
-		ArrayList<Track> includedTracks = new ArrayList<>(); // List will be used to create optimized Album object to return
-
-		for (int i = length; i > 0 && currentCapacity > 0; i--) {
-
-			if (currentCapacity != matrix[i - 1][K]) {
-
-				double[] currentDoubleArray = new double[sequential_data.get(i).size()];
+			double[] currentDoubleArray = new double[sequential_data.get(i).size()];
 				for(int j = 0; j < sequential_data.get(i).size(); j++){
 					currentDoubleArray[j] = sequential_data.get(i).get(j);
 				}
 
-				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), Integer.parseInt(list.get(i).get(4)), currentDoubleArray));
-				// We remove items value and weight
-				currentCapacity -= v.get(i - 1);
-				K -= w.get(i - 1);
-			}
+			allTracks.add(new Track(i, w.get(i), relativeValues.get(i), v.get(i), currentDoubleArray));
+		}
+		Album allTracksAlbum = new Album(allTracks, 0, 0);
+		allTracksAlbum.trackListSorter_IndVal();;
+		allTracksAlbum.display();
 
+		int total_duration = 0;
+		int total_popularity = 0;
+		ArrayList<Track> includedTracks = new ArrayList<>();
+		int index_counter = 0;
+
+		while(total_duration + allTracks.get(index_counter).getDuration() <= W){
+			includedTracks.add(allTracks.get(index_counter));
+			total_duration += allTracks.get(index_counter).getDuration();
+			total_popularity += allTracks.get(index_counter).getIndividualValue();
+			index_counter += 1;
 		}
 
-		Album OptimizedAlbum = new Album(includedTracks, matrix[length][W], 0);
+		Album OptimizedAlbum = new Album(includedTracks, total_popularity, 0);
+		OptimizedAlbum.trackListSorter_IndVal();
 		return OptimizedAlbum;
 	}
 }
