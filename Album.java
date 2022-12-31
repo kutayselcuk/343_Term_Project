@@ -142,7 +142,7 @@ public class Album {
 			System.out.println("\nAlbum Solution");
 			System.out.println("Popularity = " + (totalValue-emptyCost()));
 			System.out.println("Total Duration: " + (totalDuration) + " milliseconds");
-			System.out.println("Ttoal Sequantial VAlue: " + totalSeqValue);
+			System.out.println("Toal Sequantial VAlue: " + totalSeqValue);
 			System.out.println("\nTracks to pick :");
 
 			int queueNo = 1;
