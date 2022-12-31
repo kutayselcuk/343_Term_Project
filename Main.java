@@ -167,7 +167,7 @@ public class Main {
 
 		}
 
-		Album OptimizedAlbum = new Album(includedTracks, matrix[length][W], 0);
+		Album OptimizedAlbum = new Album(includedTracks, matrix[length][W], 0, W);
 		return OptimizedAlbum;
 	}
 }

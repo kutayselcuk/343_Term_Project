@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
 public class Album {
 
 	// list of items to put in the album to have the maximal value
@@ -10,12 +8,14 @@ public class Album {
 	// maximal value possible
 	public int totalValue;
 	public double totalSeqValue;
+	public int capacity;
 
 
-	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue) {
+	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue, int capacity) {
 		this.tracks = tracks;
 		this.totalValue = totalValue;
 		this.totalSeqValue = totalSeqValue;
+		this.capacity = capacity;
 	}
 	
 	public void albumOrganizer(int length){
@@ -103,7 +103,7 @@ public class Album {
 	}
 
 
-	public int totalMinute(){
+	public int totalDuration(){
 		int totalMinute = 0;
 		for (Track track : tracks) {
 			totalMinute += track.getDuration();
@@ -111,17 +111,21 @@ public class Album {
 		return totalMinute;
 	}
 
-
 	public void display() {
-		double totalMinute = totalMinute();
+		double totalDuration = totalDuration();
+		double emptySecondsCost = (capacity-totalDuration)/1000*0.02;
+
 		if (tracks != null  &&  !tracks.isEmpty()){
 			System.out.println("\nAlbum Solution");
-			System.out.println("Popularity = " + totalValue);
-			System.out.println("Total Minute: " + (totalMinute/60000));
-			System.out.println("Tracks to pick :");
+			System.out.println("Popularity = " + (totalValue-emptySecondsCost));
+			System.out.println("Total Minute: " + (totalDuration));
+			System.out.println("Total Sequantial Value: " + totalSeqValue);
+			System.out.println("\nTracks to pick:");
 
+			int i = 1;
 			for (Track track : tracks) {
-				System.out.println("- " + track.getId() + " with value: " + track.getIndividualValue());
+				System.out.println("Queue No: " + i + " | ID: " + track.getId() + " | Value: " + track.getIndividualValue());
+				i++;
 			}
 		}
 	}
