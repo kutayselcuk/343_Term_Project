@@ -121,12 +121,12 @@ public class Main {
 			for (int j = 0; j <= W; j++) {
 
 				if (weightList.get(i - 1) > j) {
-					BottomUpMatrix[i][j] = BottomUpMatrix[i - 1][j] - j*(int)0.02;
+					BottomUpMatrix[i][j] = BottomUpMatrix[i - 1][j] - j*(int)0.00002;
 				}
 
 				else {
 					// We maximize value at this rank in the matrix
-					BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i - 1][j] - j*(int)0.02 , valueList.get(i - 1) - ((j - weightList.get(i - 1))*(int)0.02) + BottomUpMatrix[i - 1][j - weightList.get(i - 1)]);
+					BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i - 1][j] - j*(int)0.00002 , valueList.get(i - 1) - ((j - weightList.get(i - 1))*(int)0.00002) + BottomUpMatrix[i - 1][j - weightList.get(i - 1)]);
 				}
 
 			}
