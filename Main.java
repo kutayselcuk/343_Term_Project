@@ -44,7 +44,6 @@ public class Main {
 		
 	}
 
-
 	public static List<List<String>> readValues() throws IOException {
 		try {
 			List<List<String>> data = new ArrayList<>();// list of lists to store data
@@ -107,53 +106,51 @@ public class Main {
 
 	}
 
-	public static Album AlbumOptimizer(List<Integer> valueList, List<Integer> weightList, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
+	public static Album AlbumOptimizer(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
 
-		int[][] BottomUpMatrix = new int[length + 1][W + 1];
+		int[][] matrix = new int[w.size() + 1][W + 1];
 
 		// First line of algorithm is assigned to 0
 		for (int i = 0; i <= W; i++) {
-			BottomUpMatrix[0][i] = 0;
+			matrix[0][i] = 0;
 		}
 
-		for (int i = 1; i <= length; i++) {
-			// We iterate on each capacity
+		for (int i = 1; i <= w.size(); i++) {
 			for (int j = 0; j <= W; j++) {
-
-				if (weightList.get(i - 1) > j) {
-					BottomUpMatrix[i][j] = BottomUpMatrix[i - 1][j];
+				int weight = w.get(i-1);
+				if(weight <= j){
+					matrix[i][j] = Math.max(v.get(i-1) + matrix[i - 1][j - weight], matrix[i - 1][j]
+					);
 				}
-
-				else {
-					// We maximize value at this rank in the matrix
-					BottomUpMatrix[i][j] = Math.max(BottomUpMatrix[i - 1][j], valueList.get(i - 1) + BottomUpMatrix[i - 1][j - weightList.get(i - 1)]);
+				else{
+					matrix[i][j]=matrix[i-1][j];
 				}
 
 			}
 		}
 
-		int currentCapacity = BottomUpMatrix[length][W];
-		int w = W;
+		int currentCapacity = matrix[length][W];
+		int K = W;
 		ArrayList<Track> includedTracks = new ArrayList<>(); // List will be used to create optimized Album object to return
 
 		for (int i = length; i > 0 && currentCapacity > 0; i--) {
 
-			if (currentCapacity != BottomUpMatrix[i - 1][w]) {
-				
+			if (currentCapacity != matrix[i - 1][K]) {
+
 				double[] currentDoubleArray = new double[sequential_data.get(i).size()];
 				for(int j = 0; j < sequential_data.get(i).size(); j++){
 					currentDoubleArray[j] = sequential_data.get(i).get(j);
 				}
-				
+
 				includedTracks.add(new Track(Integer.parseInt(list.get(i).get(0)), Integer.parseInt(list.get(i).get(5)), Integer.parseInt(list.get(i).get(4)), currentDoubleArray));
 				// We remove items value and weight
-				currentCapacity -= valueList.get(i - 1);
-				w -= weightList.get(i - 1);
+				currentCapacity -= v.get(i - 1);
+				K -= w.get(i - 1);
 			}
-			
+
 		}
 
-		Album OptimizedAlbum = new Album(includedTracks, BottomUpMatrix[length][W], 0);
+		Album OptimizedAlbum = new Album(includedTracks, matrix[length][W], 0);
 		return OptimizedAlbum;
 	}
 }
