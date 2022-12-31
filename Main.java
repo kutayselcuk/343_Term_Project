@@ -46,18 +46,22 @@ public class Main {
 
 	public static Album AlbumOptimizer2(List<Integer> v, List<Integer> w, int W, int length, List<List<String>> list, List<ArrayList<Double>> sequential_data) {
 		
-		int[][] matrix = new int[w.size() + 1][W + 1];
+		double initialCost = W/1000.0*0.02*-1;
+		double[][] matrix = new double[w.size() + 1][W + 1];
 
 		// First line of algorithm is assigned to 0
 		for (int i = 0; i <= W; i++) {
-			matrix[0][i] = 0;
+			matrix[0][i] = initialCost;
 		}
 
 		for (int i = 1; i <= w.size(); i++) {
 			for (int j = 0; j <= W; j++) {
 				int weight = w.get(i-1);
+				double savedCost = weight/1000.0*0.02;
 				if(weight <= j){
-					matrix[i][j] = Math.max(v.get(i-1) + matrix[i - 1][j - weight], matrix[i - 1][j]
+					matrix[i][j] = Math.max(
+							v.get(i-1) + matrix[i - 1][j - weight] + savedCost,
+							matrix[i - 1][j]
 					);
 				}
 				else{
@@ -67,7 +71,8 @@ public class Main {
 			}
 		}
 		
-		int currentCapacity = matrix[length][W];
+		double currentCapacity = matrix[length][W];
+		System.out.println("obj: " + currentCapacity );
 		int K = W;
 		ArrayList<Track> includedTracks = new ArrayList<>(); // List will be used to create optimized Album object to return
 

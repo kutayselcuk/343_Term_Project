@@ -1,18 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
 public class Album {
 
 	// list of items to put in the album to have the maximal value
 	public ArrayList<Track> tracks;
 	// maximal value possible
-	public int totalValue;
+	public double totalValue;
 	public double totalSeqValue;
 
 
-	public Album(ArrayList<Track> tracks, int totalValue, double totalSeqValue) {
+	public Album(ArrayList<Track> tracks, double totalValue, double totalSeqValue) {
 		this.tracks = tracks;
 		this.totalValue = totalValue;
 		this.totalSeqValue = totalSeqValue;
